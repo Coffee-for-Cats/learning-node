@@ -1,4 +1,5 @@
 const os = require('os');
+const log = require('./logger');
 
 const { freemem, totalmem } = os
 
@@ -14,15 +15,19 @@ setInterval(() => {
         format: function () {
             return {
                 free: this.free + " MB",
-                total: this.total + " MB; ",
+                total: this.total + " MB",
                 usage: this.percent.free + "%"
             }
         }
     }
+    const packed = status.format()
 
     console.clear();
     console.log("= STATUS DO COMPUTADOR =")
-    console.table(status.format())
+    console.log(packed)
+    console.table(packed)
+
+    log(`${JSON.stringify(packed)}\n`);
 
     //De quanto em quanto tempo rodará
 }, 800);
